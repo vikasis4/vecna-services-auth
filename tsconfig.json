@@ -1,0 +1,21 @@
+{
+  "include": ["src/types/**/*.d.ts", "src/**/*.ts"],
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"],
+      "@types-models/*": ["types/models/*"],
+      "@types-utils/*": ["types/utils/*"],
+      "@types-controllers/*": ["types/controllers/*"]
+    },
+    "typeRoots": ["node_modules/@types", "src/types"]
+  }
+}
