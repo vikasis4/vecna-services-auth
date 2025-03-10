@@ -11,7 +11,7 @@ import errorHandler from "./middleware/errorHandler.middleware";
 import * as customTypes from "@/types/index";
 import redisClient from "./redis/redis";
 import path from "path";
-
+ 
 connectToDatabase();
 
 const app = express();
