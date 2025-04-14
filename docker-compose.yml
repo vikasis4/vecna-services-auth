@@ -1,0 +1,61 @@
+version: "1.0"
+name: yt-mate-services
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo-db
+    restart: always
+    networks:
+      - yt-mate-network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: ytMate
+
+  redis:
+    image: redis:8.0-M03-alpine
+    container_name: redis-server
+    restart: always
+    networks:
+      - yt-mate-network
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: ["redis-server", "--requirepass", "vikas-yt-mate"]
+
+  rabbitmq:
+    image: rabbitmq:4.1.0-beta.4-alpine
+    container_name: rabbitmq-server
+    restart: always
+    networks:
+      - yt-mate-network
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+  auth-service:
+    image: vikasdev4046/auth-service:1.1
+    container_name: auth-service
+    restart: always
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env
+    networks:
+      - yt-mate-network
+  
+volumes:
+  rabbitmq-data:
+    driver: local
+  redis-data:
+    driver: local
+
+networks:
+  yt-mate-network:
+    driver: bridge
